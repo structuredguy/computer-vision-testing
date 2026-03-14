@@ -1,8 +1,0 @@
-(let* ((image (car (gimp-image-list)))
-       (width (car (gimp-image-get-width image)))
-       (height (car (gimp-image-get-height image)))
-       (layers (gimp-image-get-layers image))
-       (num-layers (car layers)))
-  (display (string-append "Image Name: " (car (gimp-image-get-name image)) "\n"))
-  (display (string-append "Dimensions: " (number->string width) " x " (number->string height) "\n"))
-  (display (string-append "Total Layers: " (number->string (vector-length (cadr layers))) "\n")))
