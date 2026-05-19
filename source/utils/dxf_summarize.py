@@ -2,7 +2,7 @@ import ezdxf
 import os
 
 
-def inspect_dxf(file_path):
+def summarize_dxf(file_path):
     if not os.path.exists(file_path):
         print(f"ERROR: Could not find file at {file_path}")
         return
@@ -78,5 +78,5 @@ if __name__ == "__main__":
         print(f"Found {len(dxf_files)} .dxf file(s)\n")
         for dxf_file in dxf_files:
             file_path = os.path.join(DIRECTORY_PATH, dxf_file)
-            inspect_dxf(file_path)
+            summarize_dxf(file_path)
             print("\n" + "="*60 + "\n")
