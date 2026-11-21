@@ -1,0 +1,208 @@
+% Configurable font size: defaults to 9pt for main.tex, or 10pt if pre-set (e.g. by main_linkedin.tex)
+\ifdefined\beamerfontsize\else\def\beamerfontsize{9pt}\fi
+\documentclass[aspectratio=169, \beamerfontsize]{beamer}
+
+% ==============================================================================
+% THEME & STYLING
+% ==============================================================================
+\usetheme{Boadilla}
+\usecolortheme{whale}
+
+% Custom Mediterranean & Volcanic Palette
+\definecolor{aegeanblue}{RGB}{20, 75, 140}
+\definecolor{cobalt}{RGB}{0, 45, 98}
+\definecolor{volcanicslate}{RGB}{45, 55, 72}
+\definecolor{terracotta}{RGB}{184, 80, 52}
+\definecolor{lightash}{RGB}{245, 247, 250}
+
+\setbeamercolor{palette primary}{bg=aegeanblue,fg=white}
+\setbeamercolor{palette secondary}{bg=cobalt,fg=white}
+\setbeamercolor{palette tertiary}{bg=volcanicslate,fg=white}
+\setbeamercolor{structure}{fg=aegeanblue}
+\setbeamercolor{title}{bg=aegeanblue,fg=white}
+\setbeamercolor{frametitle}{bg=aegeanblue,fg=white}
+\setbeamercolor{item}{fg=aegeanblue}
+
+% Typography & Spacing
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+
+% ==============================================================================
+% PACKAGES
+% ==============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+% ==============================================================================
+% CONFIGURATION TOGGLE SWITCHES
+% ==============================================================================
+% Set \workingtrue  -> fast compilation & lightweight mobile PDF (< 3 MB) using ../img_working/
+% Set \workingfalse -> full-resolution presentation PDF using original camera assets
+\newif\ifworking
+\workingtrue
+
+% Set \linkedintrue  -> LinkedIn mode: 10pt font, clean ULL affiliation, interactive index & CTA
+% Set \linkedinfalse -> Formal Academic mode: 9pt font, student email, traditional lecture outline
+\newif\iflinkedin
+\ifdefined\islinkedin
+  \linkedintrue
+\else
+  \linkedinfalse
+\fi
+
+% Search directories for images depending on mode
+\ifworking
+\graphicspath{{../img_working/}{../}{./}{../../img/}}
+\else
+\graphicspath{{../}{./}{../../img/}}
+\fi
+
+% ==============================================================================
+% REUSABLE SPLIT-SLIDE PHOTO MACRO
+% ==============================================================================
+% Handles existing photos (resolving working vs presentation assets) or
+% renders a clean placeholder box if TBD
+\newcommand{\slidephoto}[2]{%
+  % #1 = image file name or path
+  % #2 = caption or description
+  \begin{minipage}[t][0.68\textheight][c]{\linewidth}
+    \centering
+    \ifworking
+    \IfFileExists{../img_working/#1}{%
+      \includegraphics[width=\linewidth, height=0.58\textheight, keepaspectratio]{../img_working/#1}\\[0.25em]
+      {\tiny\color{gray} #2}%
+    }{%
+      \IfFileExists{../#1}{%
+        \includegraphics[width=\linewidth, height=0.58\textheight, keepaspectratio]{../#1}\\[0.25em]
+        {\tiny\color{gray} #2}%
+      }{%
+        \IfFileExists{#1}{%
+          \includegraphics[width=\linewidth, height=0.58\textheight, keepaspectratio]{#1}\\[0.25em]
+          {\tiny\color{gray} #2}%
+        }{%
+          \setlength{\fboxsep}{8pt}%
+          \fbox{%
+            \begin{minipage}[c][0.54\textheight][c]{0.92\linewidth}
+              \centering
+              {\small\textbf{\color{aegeanblue}[ Photo To Be Determined ]}}\\[0.6em]
+              {\scriptsize\color{volcanicslate} #2}\\[0.4em]
+              {\tiny\color{gray}(File: \texttt{\detokenize{#1}})}
+            \end{minipage}%
+          }%
+        }%
+      }%
+    }%
+    \else
+    \IfFileExists{../#1}{%
+      \includegraphics[width=\linewidth, height=0.58\textheight, keepaspectratio]{../#1}\\[0.25em]
+      {\tiny\color{gray} #2}%
+    }{%
+      \IfFileExists{#1}{%
+        \includegraphics[width=\linewidth, height=0.58\textheight, keepaspectratio]{#1}\\[0.25em]
+        {\tiny\color{gray} #2}%
+      }{%
+        \setlength{\fboxsep}{8pt}%
+        \fbox{%
+          \begin{minipage}[c][0.54\textheight][c]{0.92\linewidth}
+            \centering
+            {\small\textbf{\color{aegeanblue}[ Photo To Be Determined ]}}\\[0.6em]
+            {\scriptsize\color{volcanicslate} #2}\\[0.4em]
+            {\tiny\color{gray}(File: \texttt{\detokenize{#1}})}
+          \end{minipage}%
+        }%
+      }%
+    }%
+    \fi
+  \end{minipage}%
+}
+
+% ==============================================================================
+% LINKEDIN CONDITIONAL UI MACROS
+% ==============================================================================
+\newcommand{\linkedinswipe}{%
+  \iflinkedin
+  \begin{beamercolorbox}[rounded=true, shadow=false, wd=0.98\linewidth, sep=3.5pt]{palette primary}
+    \centering
+    {\scriptsize \textbf{\color{white}11-Slide Visual Guide $\rightarrow$}}\\[-0.1em]
+    {\tiny \color{lightash}Swipe or click to explore}
+  \end{beamercolorbox}
+  \else
+  {\tiny \color{gray}\today}
+  \fi
+}
+
+\newcommand{\conclusionbox}{%
+  \iflinkedin
+  \begin{beamercolorbox}[rounded=true, shadow=false, wd=\linewidth, sep=4pt]{palette tertiary}
+    \centering
+    {\scriptsize \textbf{\color{white}Discussion: Which adaptation surprised you most?}}\\[0.1em]
+    {\tiny \color{lightash}Share your perspective in the comments below $\downarrow$}
+  \end{beamercolorbox}
+  \else
+  \begin{beamercolorbox}[rounded=true, shadow=false, wd=\linewidth, sep=4pt]{palette secondary}
+    \centering
+    {\scriptsize \textbf{\color{white}Cycladic Vernacular vs. Modern Logistics}}\\[0.1em]
+    {\tiny \color{lightash}Preserving historic equilibrium under 21st-century environmental loads}
+  \end{beamercolorbox}
+  \fi
+}
+
+% ==============================================================================
+% METADATA
+% ==============================================================================
+\title[Cycladic Architecture \& Santorini]{Cycladic Architecture \& Santorini}
+\subtitle{Engineering Scarcity, Seismic Resilience, and Volcanic Geology}
+\author[Tomas Gonzalez Llarena]{Tomas Gonzalez Llarena}
+\iflinkedin
+\institute[ULL]{Universidad de La Laguna}
+\else
+\institute[alu0101841946@ull.edu.es]{Universidad de La Laguna}
+\fi
+\date{\today}
+
+% ==============================================================================
+% DOCUMENT BODY: MODULAR SLIDES
+% ==============================================================================
+% You can reorder, add, or comment out any slide simply by moving these lines!
+\begin{document}
+
+% Title Slide
+\input{slides/slide00_title.tex}
+
+% Slide 7: Geological Stratigraphy & Volcanic Hazards
+\input{slides/slide07_volcanic_geology.tex}
+
+% Slide 6: Seismic Resilience: Akrotiri to Modern Codes
+\input{slides/slide06_seismic_engineering.tex}
+
+% Slide 1: Material Scarcity & Compression Geometry
+\input{slides/slide01_environmental_scarcity.tex}
+
+% Slide 3: Thermodynamics & Passive Climate Control
+\input{slides/slide03_thermodynamics.tex}
+
+% Slide 4: Urban Morphologies & Defensive Vernacular
+\input{slides/slide04_urban_defense.tex}
+
+% Slide 2: Religious Architecture & The Blue Domes
+\input{slides/slide02_blue_domes.tex}
+
+% Slide 5: Kinetic Vernacular: Mykonos Windmills
+\input{slides/slide05_windmills.tex}
+
+% Slide 8: Environmental & Socio-Economic Adaptation: The Cable Car
+\input{slides/slide08_cable_car_adaptation.tex}
+% Note: Geotechnical deep-anchoring detail available in slides/slide08_cable_car_geotechnics.tex
+
+% Slide 9: Modern Transitions: Overtourism, Water & Energy
+\input{slides/slide09_modern_challenges.tex}
+
+% Slide 10: Conclusion & Summary Synthesis
+\input{slides/slide10_conclusion.tex}
+
+\end{document}

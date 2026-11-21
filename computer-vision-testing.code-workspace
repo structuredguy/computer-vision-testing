@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../My Pictures"
+		}
+	],
+	"settings": {
+		"terminal.integrated.env.windows": {
+			"PYTHONPATH": "${workspaceFolder}/src"
+		},
+		"jupyter.notebookFileRoot": "${workspaceFolder}"
+	}
+}

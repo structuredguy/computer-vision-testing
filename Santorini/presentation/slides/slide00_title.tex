@@ -1,0 +1,56 @@
+% ==============================================================================
+% SLIDE 0: TITLE SLIDE (HORIZONTAL PANORAMA SPLIT & INTERACTIVE INDEX)
+% ==============================================================================
+\begin{frame}[plain]
+  \vspace{-0.6em}
+  \centering
+
+  % Top Half: Panoramic Hero Image spanning full width
+  \begin{minipage}{\linewidth}
+    \centering
+    \ifworking
+    \def\panoramapath{../img_working/Santorini-panorama.png}
+    \else
+    \def\panoramapath{../Santorini-panorama.png}
+    \fi
+    \IfFileExists{\panoramapath}{%
+      \includegraphics[width=\linewidth, height=0.40\textheight, keepaspectratio]{\panoramapath}\\[0.15em]
+      {\tiny\color{gray} Caldera Rim Panorama: Vernacular Settlement Integrated into Volcanic Stratigraphy}%
+    }{%
+      \slidephoto{Santorini-panorama.png}{Caldera Rim Panorama}%
+    }%
+  \end{minipage}
+
+  \vspace{0.4em}
+
+  % Bottom Half: Title, Subtitle, Divider, and Interactive Navigation
+  \begin{minipage}{0.98\linewidth}
+    {\Large \textbf{\color{aegeanblue}Cycladic Architecture \& Santorini}}\\[0.2em]
+    {\footnotesize \color{volcanicslate}Engineering Scarcity, Seismic Resilience, and Volcanic Geology}\\[0.4em]
+
+    {\color{aegeanblue}\hrule height 1.2pt}
+    \vspace{0.4em}
+
+    \begin{columns}[T, onlytextwidth]
+      % Left Column: Interactive Navigatable Tree
+      \begin{column}{0.65\textwidth}
+        {\scriptsize \color{volcanicslate}
+        \textbf{Interactive Topic Index (Click to Jump):}\\[0.25em]
+        $\blacktriangleright$ \hyperlink{geology}{\color{aegeanblue}Volcanic Geology} \& \hyperlink{seismic}{\color{aegeanblue}Seismic Resilience}\\
+        $\blacktriangleright$ \hyperlink{scarcity}{\color{aegeanblue}Compression Statics} \& \hyperlink{thermo}{\color{aegeanblue}Passive Thermal Mass}\\
+        $\blacktriangleright$ \hyperlink{defense}{\color{aegeanblue}Urban Defense} \& \hyperlink{windmills}{\color{aegeanblue}Kinetic Windmills}\\
+        $\blacktriangleright$ \hyperlink{cablecar}{\color{aegeanblue}Cable Car Infrastructure} \& \hyperlink{challenges}{\color{aegeanblue}Modern Limits}
+        }
+      \end{column}
+
+      % Right Column: Author Branding & Styled Swipe Pill
+      \begin{column}{0.34\textwidth}
+        \raggedleft
+        {\scriptsize \textbf{\color{aegeanblue}Tomas Gonzalez Llarena}}\\[0.1em]
+        {\tiny \color{gray}Universidad de La Laguna}\\[0.4em]
+
+        \linkedinswipe
+      \end{column}
+    \end{columns}
+  \end{minipage}
+\end{frame}
